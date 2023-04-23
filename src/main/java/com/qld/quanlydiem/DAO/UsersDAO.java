@@ -47,7 +47,7 @@ public class UsersDAO {
         try {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM quanlydiem.users WHERE username = ? AND password = ?");
             pstmt.setString(1, username);         
-            String encryptPass = AES.encrypt(password, KEY_CHAIN);
+            String encryptPass = password; //AES.encrypt(password, KEY_CHAIN);
             pstmt.setString(2, encryptPass);
             
             ResultSet rs = pstmt.executeQuery();
