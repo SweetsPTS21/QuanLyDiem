@@ -85,7 +85,7 @@
 
             <div class="row">
                 <div class="col-md-6 center">
-                    <form action="/configSubject" method="post">
+                    <form action="/configSubject" method="post" id="configForm">
                         <div class="form-group">
                             <label>ID môn học</label>
                             <input type="text" class="form-control" id="idSubject" name="idSubject" minlength="1" maxlength="30" required>
@@ -102,12 +102,30 @@
                         <div class="form-group">
                             <label>Nhập số %</label>
                             <input type="text" class="form-control" id="subPercent" name="subPercent" minlength="1" maxlength="3"  aria-valuemax="100" required>
+                            <span id="type-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <input type="submit" class="btn btn-success" id="updateSubject">
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            const number = document.querySelector("#subPercent");
+            const typeError = document.querySelector("#type-error");
+            const form = document.querySelector("#configForm");
+
+            form.addEventListener("submit", (e) => {
+                if (number.value > 100) {
+                    e.preventDefault();
+                    typeError.textContent = "Số % không được lớn hơn 100";
+                }
+                const regex = /^[0-9]+$/;
+                if(!regex.test(number.value)) {
+                    e.preventDefault();
+                    typeError.textContent = "Số % phải là số";
+                }
+            });
+        </script>
         <script>
             $(document).ready(function () {
                 $('.notify').removeClass('hide');

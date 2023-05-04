@@ -189,39 +189,45 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="/addNewUser" method="post">
+                            <form action="/addNewUser" method="post" id="addUserForm">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label>Họ</label>
-                                        <input type="text" class="form-control" id="firstName"  name="firstName" minlength="1" maxlength="30" required>
+                                        <input type="text" class="form-control" id="firstName"  name="firstName" minlength="1" maxlength="30" required><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Tên</label>
-                                        <input type="text" class="form-control" id="lastName"  name="lastName" minlength="1" maxlength="30" required>
+                                        <input type="text" class="form-control" id="lastName"  name="lastName" minlength="1" maxlength="30" required><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Tài khoản</label>
-                                        <input type="text" class="form-control" id="username"  name="username" minlength="6" maxlength="30" required>
+                                        <input type="text" class="form-control" id="username"  name="username" minlength="6" maxlength="30" onkeypress="return event.charCode != 32" required>
+                                        <span id="username-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Mật khẩu</label>
-                                        <input type="text" class="form-control" id="password"  name="password" required>
+                                        <input type="text" class="form-control" id="password"  name="password" minlength="6" maxlength="18" onkeypress="return event.charCode != 32"required>
+                                        <span id="password-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Xác nhận mật khẩu</label>
-                                        <input type="text" class="form-control" id="confirmPass"  name="confirmPass" required>
+                                        <input type="text" class="form-control" id="confirmPass"  name="confirmPass" minlength="6" maxlength="18" onkeypress="return event.charCode != 32" required>
+                                        <span id="repass-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Tuổi</label>
-                                        <input type="text" class="form-control" id="age" name="age"  minlength="1" maxlength="3" required>
+                                        <input type="text" class="form-control" id="age" name="age"  minlength="1" maxlength="3" min="18" max="100" required>
+                                        <span id="age-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Số điện thoại</label>
-                                        <input type="text" class="form-control" id="phoneNumber"  name="phoneNumber" minlength="3" maxlength="11" required>
+                                        <input type="text" class="form-control" id="phoneNumber"  name="phoneNumber" minlength="10" maxlength="11" required>
+                                        <span id="phone-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
                                         <input type="emil" class="form-control" id="email"  name="email" minlength="5" maxlength="30" xrequired>
+                                        <span id="email-error" style="color: red; font-size: 15px;"></span><br>
                                     </div>
                                     <div class="form-group">
                                         <label>Địa chỉ</label>
@@ -258,7 +264,86 @@
 
                     </div>
                 </div>
-                <script src="js/validation.js"></script>
+                <script>
+                    const role = document.querySelector("#selectRole");
+                    const khoa = document.querySelector("#selectKhoa");
+                    const form = document.querySelector("#addUserForm");
+
+                    const username = document.querySelector("#username");
+                    const password = document.querySelector("#password");
+                    const confirmPass = document.querySelector("#confirmPass");
+                    const age = document.querySelector("#age");
+                    const phoneNumber = document.querySelector("#phoneNumber");
+                    const email = document.querySelector("#email");
+                    const usernameError = document.querySelector("#username-error");
+                    const passwordError = document.querySelector("#password-error");
+                    const repassError = document.querySelector("#repass-error");
+                    const ageError = document.querySelector("#age-error");
+                    const phoneError = document.querySelector("#phone-error");
+                    const emailError = document.querySelector("#email-error");
+                    document.addEventListener("DOMContentLoaded", function() {
+                        isNotStudent();
+                        role.addEventListener("click", isNotStudent);
+
+                    });
+
+                    function isNotStudent() {
+                        if(role.value !== "student") {
+                            khoa.disabled = true;
+                        } else {
+                            khoa.disabled = false;
+                        }
+                    }
+                    form.addEventListener("submit", function(event) {
+                        const usernameRegex = /\W/;
+                        let formValid = 1;
+                        //Username validation
+                        if (usernameRegex.test(username.value)) {
+                            username.style.border = "1px solid red";
+                            usernameError.textContent = 'Tên đăng nhập không chứa ký tự đặc biệt';
+                            formValid = 0
+
+                        } else {
+                            username.style.border = "1px solid green";
+                            usernameError.textContent = ''; // clear error message
+                        }
+                        //Password validation
+                        if (confirmPass.value !== password.value) {
+                            confirmPass.style.border = "1px solid red";
+                            repassError.textContent = 'Mật khẩu không khớp';
+                            formValid = 0
+
+                        } else {
+                            confirmPass.style.border = "1px solid green";
+                            repassError.textContent = ''; // clear error message
+                        }
+                        //Age validation
+                        if(age.value < 18 || age.value > 100) {
+                            age.style.border = "1px solid red";
+                            ageError.textContent = 'Tuổi không hợp lệ';
+                            formValid = 0
+
+                        } else {
+                            age.style.border = "1px solid green";
+                            ageError.textContent = ''; // clear error message
+                        }
+                        //Email validation
+                        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+                        if (!emailRegex.test(email.value)) {
+                            email.style.border = "1px solid red";
+                            emailError.textContent = 'Email không hợp lệ';
+                            formValid = 0
+
+                        } else {
+                            email.style.border = "1px solid green";
+                            emailError.textContent = ''; // clear error message
+                        }
+                        if(formValid === 0) {
+                            event.preventDefault();
+                        }
+
+                    });
+                </script>
                 <!----add-modal end--------->
 
 

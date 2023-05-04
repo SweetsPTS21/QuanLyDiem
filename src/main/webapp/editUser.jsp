@@ -82,7 +82,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 center">
-                    <form action="/updateUser" method="post">
+                    <form action="/updateUser" method="post" id="addUserForm">
                         <div class="form-group">
                             <label>Họ</label>
                             <input type="text" class="form-control" id="firstName" name="firstName"
@@ -100,32 +100,37 @@
                             <input type="text" class="form-control" id="username" name="username"
                                    value="<%=userEdited.getUsername()%>" minlength="6" maxlength="30"
                                    required>
-                        </div>
+                            <span id="username-error" style="color: red; font-size: 15px;"></span><br>                        </div>
                         <div class="form-group">
                             <label>Mật khẩu</label>
                             <input type="text" class="form-control" id="password" name="password"
                                    value="<%=userEdited.getPassword()%>" required>
+                            <span id="password-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">
                             <label>Xác nhận mật khẩu</label>
                             <input type="text" class="form-control" id="confirmPass" name="confirmPass" required>
+                            <span id="repass-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">
                             <label>Tuổi</label>
                             <input type="text" class="form-control" id="age" name="age" value="<%=userEdited.getAge()%>"
                                    minlength="1" maxlength="3" required>
+                            <span id="age-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại</label>
                             <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    value="<%=userEdited.getPhoneNumber()%>" minlength="3"
                                    maxlength="11" required>
+                            <span id="phone-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">
                             <label>Email</label>
                             <input type="emil" class="form-control" id="email" name="email"
                                    value="<%=userEdited.getEmail()%>" minlength="5" maxlength="30"
                                    xrequired>
+                            <span id="email-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">
                             <label>Địa chỉ</label>
@@ -173,16 +178,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            function check()  {
-                console.log(document.getElementById('selectRole').value);
-                if(document.getElementById('selectRole').value !== 'student') {
-                    document.getElementById('selectKhoa').disabled = true;
-                } else {
-                    document.getElementById('selectKhoa').disabled = false;
-                }
-            }
-        </script>
+        <script src="js/validation.js"></script>
 
 
         <!------main-content-end----------->

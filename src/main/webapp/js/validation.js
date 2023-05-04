@@ -1,43 +1,77 @@
-const firstName = document.getElementById("firstName");
-const lastName = document.getElementById("lastName");
-const userName = document.getElementById("username");
-const passWord = document.getElementById("password");
-const confirmPass = document.getElementById("confirmPass");
-const age = document.getElementById("age");
-const phoneNumber = document.getElementById("phoneNumber");
-const email = document.getElementById("email");
-const address = document.getElementById("address");
-const role = document.getElementById("selectRole");
-const khoa = document.getElementById("selectKhoa");
-const addBtn = document.getElementById("addUser");
-const updateBtn = document.getElementById("updateUser");
+const role = document.querySelector("#selectRole");
+const khoa = document.querySelector("#selectKhoa");
+const form = document.querySelector("#addUserForm");
 
-function main() {
+const username = document.querySelector("#username");
+const password = document.querySelector("#password");
+const confirmPass = document.querySelector("#confirmPass");
+const age = document.querySelector("#age");
+const phoneNumber = document.querySelector("#phoneNumber");
+const email = document.querySelector("#email");
+const usernameError = document.querySelector("#username-error");
+const passwordError = document.querySelector("#password-error");
+const repassError = document.querySelector("#repass-error");
+const ageError = document.querySelector("#age-error");
+const phoneError = document.querySelector("#phone-error");
+const emailError = document.querySelector("#email-error");
+document.addEventListener("DOMContentLoaded", function() {
+    isNotStudent();
+    role.addEventListener("click", isNotStudent);
 
-
-    addBtn.addEventListener("click", function() {
-
-    });
-
-    updateBtn.addEventListener("click", function() {
-
-    });
-
-}
+});
 
 function isNotStudent() {
-    console.log(role.value);
-    if(document.getElementById("selectRole").value !== "student") {
-       document.getElementById("selectKhoa").disabled = false;
+    if(role.value !== "student") {
+        khoa.disabled = true;
     } else {
-        document.getElementById("selectKhoa").disabled = true;
+        khoa.disabled = false;
     }
 }
+form.addEventListener("submit", function(event) {
+    const usernameRegex = /\W/;
+    let formValid = 1;
+    //Username validation
+    if (usernameRegex.test(username.value)) {
+        username.style.border = "1px solid red";
+        usernameError.textContent = 'Tên đăng nhập không chứa ký tự đặc biệt';
+        formValid = 0
 
-function deleteUser() {
-    const deleteBtn = document.getElementById('delete');
+    } else {
+        username.style.border = "1px solid green";
+        usernameError.textContent = ''; // clear error message
+    }
+    //Password validation
+    if (confirmPass.value !== password.value) {
+        confirmPass.style.border = "1px solid red";
+        repassError.textContent = 'Mật khẩu không khớp';
+        formValid = 0
 
-    deleteBtn.addEventListener('click', function () {
-        window.location.href = 'deleteUser?userId=<%=xoaId%>';
-    });
-}
+    } else {
+        confirmPass.style.border = "1px solid green";
+        repassError.textContent = ''; // clear error message
+    }
+    //Age validation
+    if(age.value < 18 || age.value > 100) {
+        age.style.border = "1px solid red";
+        ageError.textContent = 'Tuổi không hợp lệ (18-100)';
+        formValid = 0
+
+    } else {
+        age.style.border = "1px solid green";
+        ageError.textContent = ''; // clear error message
+    }
+    //Email validation
+    const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!emailRegex.test(email.value)) {
+        email.style.border = "1px solid red";
+        emailError.textContent = 'Email không hợp lệ';
+        formValid = 0
+
+    } else {
+        email.style.border = "1px solid green";
+        emailError.textContent = ''; // clear error message
+    }
+    if(formValid === 0) {
+        event.preventDefault();
+    }
+});

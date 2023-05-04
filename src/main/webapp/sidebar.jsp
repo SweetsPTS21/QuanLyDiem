@@ -50,13 +50,6 @@
             <a href="configSubject.jsp" class="dashboard"><i class="material-icons">dashboard</i>Cấu hình</a>
         </li>
 
-        <li class="">
-            <a href="#" class=""><i class="material-icons">date_range</i>copy </a>
-        </li>
-        <li class="">
-            <a href="#" class=""><i class="material-icons">library_books</i>calender </a>
-        </li>
-
     </ul>
 </div>
 </body>

@@ -3,4 +3,99 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+    <display-name>Java EE 10 Application</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.LoginController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.LogoutController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>AddUserController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.AddUserController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ConfigController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.ConfigController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>UpdateUserController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.UpdateUserController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ConfigSubjectController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.ConfigSubjectController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteUserController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.DeleteUserController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditUserController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.EditUserController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>FindStudentController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.FindStudentController</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>PointTrackingController</servlet-name>
+        <servlet-class>com.qld.quanlydiem.Controller.PointTrackingController</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUserController</servlet-name>
+        <url-pattern>/addUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfigController</servlet-name>
+        <url-pattern>/config</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUserController</servlet-name>
+        <url-pattern>/updateUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfigSubjectController</servlet-name>
+        <url-pattern>/configSubject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUserController</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUserController</servlet-name>
+        <url-pattern>/editUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FindStudentController</servlet-name>
+        <url-pattern>/findStudent</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PointTrackingController</servlet-name>
+        <url-pattern>/pointTracking</url-pattern>
+    </servlet-mapping>
 </web-app>

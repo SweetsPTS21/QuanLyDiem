@@ -29,7 +29,10 @@ public class AddUserController extends HttpServlet {
             String address = request.getParameter("address");
             String note = request.getParameter("note");
             String role = request.getParameter("selectRole");
-            String khoa = request.getParameter("selectKhoa");
+            String khoa = "null";
+            if(request.getParameter("khoa") != null) {
+                khoa = request.getParameter("khoa");
+            }
 
             Users users = new Users();
             UsersDAO usersDAO = new UsersDAO();

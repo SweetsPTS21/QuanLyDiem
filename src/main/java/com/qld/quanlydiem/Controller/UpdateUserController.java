@@ -36,6 +36,7 @@ public class UpdateUserController extends HttpServlet {
             String phone = request.getParameter("phoneNumber");
             String address = request.getParameter("address");
             String role = request.getParameter("selectRole");
+            String note = request.getParameter("note");
             String khoa;
             if(request.getParameter("selectKhoa") == null){
                 khoa = "";
@@ -55,6 +56,7 @@ public class UpdateUserController extends HttpServlet {
             users.setPhoneNumber(phone);
             users.setAddress(address);
             users.setRole(role);
+            users.setNote(note);
 
             usersDAO.Update(users, khoa);
 
