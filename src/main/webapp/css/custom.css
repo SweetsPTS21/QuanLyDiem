@@ -893,15 +893,37 @@ body {
 #close-btn:hover {
     color: darkred;
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-  
+
+
+
+
+
+
+
+
+
+
+
+
+.showConfigList {
+    display: block !important;
+    padding-left: 40px;
+    line-height: 30px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #777777;
+    text-transform: capitalize;
+}
+.showConfigList li a {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
+}
+
+
+
+
+
+
+

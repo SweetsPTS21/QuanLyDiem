@@ -3,6 +3,7 @@ package com.qld.quanlydiem.Controller;
 import com.qld.quanlydiem.DAO.UsersDAO;
 import com.qld.quanlydiem.Model.Users;
 import com.qld.quanlydiem.Utilities.Tags;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ public class LoginController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String username, pass, message = "";
@@ -38,6 +39,7 @@ public class LoginController extends HttpServlet {
         if (pass.length() < 6 || pass.length() > 18) {
             message = "Password must be between 6 and 18 characters";
         }
+       
         String regex = "^[a-zA-Z0-9_]+$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(username);
@@ -71,7 +73,11 @@ public class LoginController extends HttpServlet {
         }
         //System.out.println(message);
         request.setAttribute("message", message);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        RequestDispatcher dispatcher= request.getRequestDispatcher("index.jsp");
+        if(dispatcher!=null){
+                dispatcher.forward(request, response);
+        }
+
     }
 
 }
