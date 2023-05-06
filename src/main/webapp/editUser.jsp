@@ -37,10 +37,17 @@
 </head>
 <body>
 <%
-  List<String> listRole = null;
-  List<Khoa> listKhoa = null;
-  try {
-    String isAdmin = session.getAttribute("isAdmin").toString();
+    List<String> listRole = null;
+    List<Khoa> listKhoa = null;
+    String role = "";
+    if (session.getAttribute("role") != null) {
+        role = session.getAttribute("role").toString();
+        if (!role.equals("admin") && !role.equals("manager")) {
+            response.sendRedirect("/logout");
+        }
+    } else {
+        response.sendRedirect("index.jsp");
+    }
     Users userEdited = (Users) request.getAttribute("userEdited");
     userEdited.setPassword(AES.decrypt(userEdited.getPassword(), Tags.getKEYCHAIN()));
     session.setAttribute("UEID", userEdited.getId());
@@ -48,13 +55,9 @@
     listRole = new ArrayList<>();
     listKhoa = new ArrayList<>();
 
-    if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
-      response.sendRedirect("index.jsp");
-    } else {
-      listRole = (List<String>) request.getAttribute("listRole");
-      khoa = (Khoa) request.getAttribute("khoa");
-      listKhoa = (List) request.getAttribute("listKhoa");
-    }
+    listRole = (List<String>) request.getAttribute("listRole");
+    khoa = (Khoa) request.getAttribute("khoa");
+    listKhoa = (List) request.getAttribute("listKhoa");
 
 %>
 <div class="wrapper">
@@ -167,12 +170,12 @@
                             <label>Chức vụ</label>
                             <select class="form-select" name="selectRole" id="selectRole" aria-label="Mặc định" onchange="check()">
 
-                                <% for (String role : listRole) {
-                                    if (role.equalsIgnoreCase(userEdited.getRole())) { %>
-                                <option selected><%=role%>
+                                <% for (String rl : listRole) {
+                                    if (rl.equalsIgnoreCase(userEdited.getRole())) { %>
+                                <option selected><%=rl%>
                                 </option>
                                 <% } else { %>
-                                <option><%=role%>
+                                <option><%=rl%>
                                 </option>
                                 <% }
                                 } %>
@@ -232,10 +235,6 @@
         <%@include file="footer.jsp" %>
 
     </div>
-    <% } catch (NullPointerException e) {
-    e.printStackTrace();
-    response.sendRedirect("index.jsp");
-} %>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>

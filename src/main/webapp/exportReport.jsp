@@ -44,31 +44,52 @@
 <%
     List<Users> listStudent = null;
     List<String[]> listStudentByLHP = null;
-    try {
-        String isAdmin = session.getAttribute("isAdmin").toString();
-        KhoaDAO khoaDAO = new KhoaDAO();
+    String role = "";
+    //String isAdmin = session.getAttribute("isAdmin").toString();
+    KhoaDAO khoaDAO = new KhoaDAO();
 
-        int STT = 0;
-        List<Khoa> listKhoa = khoaDAO.getAllKhoa();
+    int STT = 0;
+    List<Khoa> listKhoa = khoaDAO.getAllKhoa();
 
-        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
-            response.sendRedirect("index.jsp");
-        } else {
-            if(request.getAttribute("listStudent") != null) {
-                listStudent = (List<Users>) request.getAttribute("listStudent");
-            } else if(request.getAttribute("listStudentByKhoa") != null){
-                listStudent = (List<Users>) request.getAttribute("listStudentByKhoa");
-            }
-            else {
-                listStudent = new ArrayList<>();
-            }
-
-            if(request.getAttribute("listStudentByLHP") != null) {
-                listStudentByLHP = (List<String[]>) request.getAttribute("listStudentByLHP");
-            } else {
-                listStudentByLHP = new ArrayList<>();
-            }
+    if (session.getAttribute("role") != null) {
+        role = session.getAttribute("role").toString();
+        if (!role.equals("admin") && !role.equals("manager")) {
+            response.sendRedirect("/logout");
         }
+        if (request.getAttribute("listStudent") != null) {
+            listStudent = (List<Users>) request.getAttribute("listStudent");
+        } else if (request.getAttribute("listStudentByKhoa") != null) {
+            listStudent = (List<Users>) request.getAttribute("listStudentByKhoa");
+        } else {
+            listStudent = new ArrayList<>();
+        }
+
+        if (request.getAttribute("listStudentByLHP") != null) {
+            listStudentByLHP = (List<String[]>) request.getAttribute("listStudentByLHP");
+        } else {
+            listStudentByLHP = new ArrayList<>();
+        }
+    } else {
+        response.sendRedirect("index.jsp");
+    }
+//        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
+//            response.sendRedirect("index.jsp");
+//        } else {
+//            if(request.getAttribute("listStudent") != null) {
+//                listStudent = (List<Users>) request.getAttribute("listStudent");
+//            } else if(request.getAttribute("listStudentByKhoa") != null){
+//                listStudent = (List<Users>) request.getAttribute("listStudentByKhoa");
+//            }
+//            else {
+//                listStudent = new ArrayList<>();
+//            }
+//
+//            if(request.getAttribute("listStudentByLHP") != null) {
+//                listStudentByLHP = (List<String[]>) request.getAttribute("listStudentByLHP");
+//            } else {
+//                listStudentByLHP = new ArrayList<>();
+//            }
+//        }
 
 %>
 <div class="wrapper">
@@ -304,10 +325,6 @@
         <%@include file="footer.jsp" %>
 
     </div>
-        <% } catch (NullPointerException e) {
-    e.printStackTrace();
-    response.sendRedirect("index.jsp");
-} %>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>

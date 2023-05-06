@@ -21,7 +21,7 @@ public class DBUtility {
 
     public static Connection openConnection() {
         Connection con = null;
-        String url = "jdbc:mysql://localhost:3306/quanlydiem?useUnicode=true&characterEncoding=UTF-8";
+        String url = "jdbc:mysql://localhost:3306/quanlydiem";
         String user = "root";
         String password = "280301";
         try {

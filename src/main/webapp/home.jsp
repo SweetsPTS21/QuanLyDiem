@@ -33,24 +33,27 @@
 <%
     List<String> listRole = null;
     List<Khoa> listKhoa = null;
-    try {
-        String isAdmin = session.getAttribute("isAdmin").toString();
-        int userId = Integer.parseInt(session.getAttribute("userId").toString());
-        int xoaId = 0;
-        int userCount = 0;
-        List<Users> listUsers = new ArrayList<>();
-        UsersDAO usersDAO = new UsersDAO();
-        KhoaDAO khoaDAO = new KhoaDAO();
-        listRole = new ArrayList<>();
-        listKhoa = new ArrayList<>();
-
-        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
-            response.sendRedirect("index.jsp");
-        } else {
-            listUsers = usersDAO.listAccount();
-            listRole = usersDAO.getAllRole();
-            listKhoa = KhoaDAO.getInstance().getAllKhoa();
+    String role = "";
+    if (session.getAttribute("role") != null) {
+        role = session.getAttribute("role").toString();
+        if (!role.equals("admin") && !role.equals("manager")) {
+            response.sendRedirect("/logout");
         }
+    }
+    else {
+        response.sendRedirect("index.jsp");
+    }
+    int xoaId = 0;
+    int userCount = 0;
+    List<Users> listUsers = new ArrayList<>();
+    UsersDAO usersDAO = new UsersDAO();
+    KhoaDAO khoaDAO = new KhoaDAO();
+    listRole = new ArrayList<>();
+    listKhoa = new ArrayList<>();
+
+    listUsers = usersDAO.listAccount();
+    listRole = usersDAO.getAllRole();
+    listKhoa = KhoaDAO.getInstance().getAllKhoa();
 
 %>
 <div class="wrapper">
@@ -261,8 +264,8 @@
                                     <div class="form-group">
                                         <label>Chức vụ</label>
                                         <select name="selectRole" id="selectRole" aria-label="Mặc định">
-                                            <% for (String role : listRole) {%>
-                                            <option><%=role%></option>
+                                            <% for (String rl : listRole) {%>
+                                            <option><%=rl%></option>
                                             <% } %>
                                         </select>
                                     </div>
@@ -405,10 +408,6 @@
 
 </div>
 <!-------complete html----------->
-<% } catch (NullPointerException e) {
-    e.printStackTrace();
-    response.sendRedirect("index.jsp");
-} %>
 
 
 

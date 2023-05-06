@@ -35,15 +35,17 @@
 </head>
 <body>
 <%
-    try {
-        String isAdmin = session.getAttribute("isAdmin").toString();
-        String dauDiem[] = {"Chuyên cần", "Kiểm tra", "Bài tập", "Thực hành", "Thi"};
+    String role = "";
+    String dauDiem[] = {"Chuyên cần", "Kiểm tra", "Bài tập", "Thực hành", "Thi"};
 
-        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
-            response.sendRedirect("index.jsp");
-        } else {
-
+    if (session.getAttribute("role") != null) {
+        role = session.getAttribute("role").toString();
+        if (!role.equals("admin") && !role.equals("manager")) {
+            response.sendRedirect("/logout");
         }
+    } else {
+        response.sendRedirect("index.jsp");
+    }
 
 %>
 <div class="wrapper">
@@ -152,10 +154,6 @@
         <%@include file="footer.jsp" %>
 
     </div>
-        <% } catch (NullPointerException e) {
-    e.printStackTrace();
-    response.sendRedirect("index.jsp");
-} %>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>

@@ -43,28 +43,42 @@
 <body>
 <%
     List<PointBroad> listPointBoard = null;
-    try {
-        String isAdmin = session.getAttribute("isAdmin").toString();
-        Users userEdited = (Users) request.getAttribute("userEdited");
-        KhoaDAO khoaDAO = new KhoaDAO();
+    String role = "";
+    //String isAdmin = session.getAttribute("isAdmin").toString();
+    Users userEdited = (Users) request.getAttribute("userEdited");
+    KhoaDAO khoaDAO = new KhoaDAO();
 
-        int STT = 0;
+    int STT = 0;
 
-        String listGrade[] = {"D19", "D20", "D21", "D22"};
-        String listClass[] = {"CN5", "CN6", "CN7"};
-        String listTerm[] = {"HK1", "HK2", "HK3"};
-        String listSubject[] = {"Kiểm thử", "Nhúng", "Di động"};
-        List<Khoa> listKhoa = khoaDAO.getAllKhoa();
+    String listGrade[] = {"D19", "D20", "D21", "D22"};
+    String listClass[] = {"CN5", "CN6", "CN7"};
+    String listTerm[] = {"HK1", "HK2", "HK3"};
+    String listSubject[] = {"Kiểm thử", "Nhúng", "Di động"};
+    List<Khoa> listKhoa = khoaDAO.getAllKhoa();
 
-        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
-            response.sendRedirect("index.jsp");
-        } else {
-            if(request.getAttribute("listPointBoard") != null) {
-                listPointBoard = (List<PointBroad>) request.getAttribute("listPointBoard");
-            } else {
-                listPointBoard = new ArrayList<>();
-            }
+    if (session.getAttribute("role") != null) {
+        role = session.getAttribute("role").toString();
+        if (!role.equals("admin") && !role.equals("manager")) {
+            response.sendRedirect("/logout");
         }
+        if (request.getAttribute("listPointBoard") != null) {
+            listPointBoard = (List<PointBroad>) request.getAttribute("listPointBoard");
+        } else {
+            listPointBoard = new ArrayList<>();
+        }
+    } else {
+        response.sendRedirect("index.jsp");
+    }
+
+//        if (!isAdmin.equals("admin") || session.getAttribute("isAdmin") == null) {
+//            response.sendRedirect("index.jsp");
+//        } else {
+//            if(request.getAttribute("listPointBoard") != null) {
+//                listPointBoard = (List<PointBroad>) request.getAttribute("listPointBoard");
+//            } else {
+//                listPointBoard = new ArrayList<>();
+//            }
+//        }
 
 %>
 <div class="wrapper">
@@ -246,10 +260,6 @@
         <%@include file="footer.jsp" %>
 
     </div>
-        <% } catch (NullPointerException e) {
-    e.printStackTrace();
-    response.sendRedirect("index.jsp");
-} %>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="js/jquery-3.3.1.slim.min.js"></script>

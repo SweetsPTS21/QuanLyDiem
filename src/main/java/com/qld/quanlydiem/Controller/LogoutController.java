@@ -24,7 +24,7 @@ public class LogoutController extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("username");
         session.removeAttribute("userID");
-        session.removeAttribute("isAdmin");
+        session.removeAttribute("role");
 
         response.sendRedirect("index.jsp");
     }
