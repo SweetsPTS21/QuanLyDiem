@@ -70,7 +70,7 @@
 
     <!-------page-content start----------->
 
-    <div id="content">
+    <div id="content" style="overflow: auto;">
 
         <!------top-navbar-start----------->
         <%@ include file="top-navbar.jsp" %>
@@ -78,7 +78,32 @@
 
 
         <!------main-content-start----------->
+        <%if(request.getAttribute("message") != null) {
+            String error = "";
+            List<String> message = (List<String>) request.getAttribute("message"); %>
+        <div id="popup-message" class="hide">
+            <span id="close-btn" onclick="hidePopupMessage()">&times;</span>
+            <ul id="popup-messages-list">
+                <%for (String i : message) {%>
+                <li><%=i%></li>
+                <%}%>
+            </ul>
+        </div>
+        <% }%>
+        <script>
+            window.addEventListener("DOMContentLoaded", function() {
+                const messages = document.getElementById("popup-messages-list").getElementsByTagName("li");
+                if (messages.length > 0) {
+                    const popup = document.getElementById("popup-message");
+                    popup.classList.add("show");
+                }
+            });
 
+            function hidePopupMessage() {
+                const popup = document.getElementById("popup-message");
+                popup.classList.remove("show");
+            }
+        </script>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 center">
@@ -178,7 +203,26 @@
                 </div>
             </div>
         </div>
-        <script src="js/validation.js"></script>
+        <script>
+            const role = document.querySelector("#selectRole");
+            const khoa = document.querySelector("#selectKhoa");
+            const form = document.querySelector("#addUserForm");
+
+            document.addEventListener("DOMContentLoaded", function() {
+                isNotStudent();
+                role.addEventListener("click", isNotStudent);
+
+            });
+
+            function isNotStudent() {
+                if(role.value !== "student") {
+                    khoa.disabled = true;
+                } else {
+                    khoa.disabled = false;
+                }
+            }
+        </script>
+<%--        <script src="js/validation.js"></script>--%>
 
 
         <!------main-content-end----------->

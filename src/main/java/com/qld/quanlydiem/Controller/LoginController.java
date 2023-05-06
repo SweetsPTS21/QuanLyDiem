@@ -25,26 +25,53 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        String pass = request.getParameter("password");
-        String username = request.getParameter("username");
+        String username, pass, message = "";
         int thatbai = 0;
         UsersDAO usersDAO = new UsersDAO();
 
-        if (usersDAO.Login(username, pass) == 1) {
-            HttpSession session = request.getSession();
-            session.setAttribute("username", username);
-            session.setAttribute("userId", usersDAO.getUsersByUsername(username).getId());
-            session.setAttribute("isAdmin", usersDAO.getUsersByUsername(username).getRole());
-            if(request.getAttribute("auth") != null) {
-                request.removeAttribute("auth");
+        username = request.getParameter("username");
+        pass = request.getParameter("password");
+
+        if (username.length() < 6 || username.length() > 30) {
+            message = "Username must be between 6 and 30 characters";
+        }
+        if (pass.length() < 6 || pass.length() > 18) {
+            message = "Password must be between 6 and 18 characters";
+        }
+        String regex = "^[a-zA-Z0-9_]+$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(username);
+        if (!matcher.matches()) {
+            message = "Username must not contain special characters";
+        }
+
+        String regex2 = ".*\\s+.*";
+        Pattern pattern2 = Pattern.compile(regex2);
+        Matcher matcherPass = pattern2.matcher(pass);
+        Matcher matcherUsername = pattern2.matcher(username);
+        if (matcherUsername.matches() || matcherPass.matches()) {
+            message = "Username/Password must not contain space characters";
+        }
+
+        if (message.equals("")) {
+            if(usersDAO.Login(username, pass) == 1) {
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("userId", usersDAO.getUsersByUsername(username).getId());
+                session.setAttribute("isAdmin", usersDAO.getUsersByUsername(username).getRole());
+                if (request.getAttribute("auth") != null) {
+                    request.removeAttribute("auth");
+                }
+                response.sendRedirect("home.jsp");
+                return;
+            } else {
+                message = "Username or password is incorrect";
+
             }
-            response.sendRedirect("home.jsp");
         }
-        else {
-            thatbai = 1;
-            request.setAttribute("auth", thatbai);
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-        }
+        //System.out.println(message);
+        request.setAttribute("message", message);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
 }

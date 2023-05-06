@@ -863,6 +863,36 @@ body {
     background: #dc3545;
     border-left: 8px solid #a72828;
 }
+
+#popup-message {
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    text-align: center;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    transition: top 0.5s ease-in-out;
+}
+#popup-message.show {
+    top: 0;
+}
+
+#close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.5rem;
+    font-size: 2.5rem;
+    color: black;
+    cursor: pointer;
+}
+
+#close-btn:hover {
+    color: darkred;
+}
 	
 	
 	

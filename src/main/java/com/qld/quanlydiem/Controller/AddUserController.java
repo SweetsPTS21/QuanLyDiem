@@ -11,6 +11,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "AddNewUserController", value = "/addNewUser")
 public class AddUserController extends HttpServlet {
@@ -18,6 +22,7 @@ public class AddUserController extends HttpServlet {
         try {
             response.setContentType("text/html; charset=UTF-8");
             request.setCharacterEncoding("UTF-8");
+            List<String> message = new ArrayList<>();
 
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
@@ -25,6 +30,7 @@ public class AddUserController extends HttpServlet {
             String email = request.getParameter("email");
             String age = request.getParameter("age");
             String password = request.getParameter("password");
+            String confirmPass = request.getParameter("confirmPass");
             String phone = request.getParameter("phoneNumber");
             String address = request.getParameter("address");
             String note = request.getParameter("note");
@@ -34,6 +40,50 @@ public class AddUserController extends HttpServlet {
                 khoa = request.getParameter("khoa");
             }
 
+            if (username.length() < 6 || username.length() > 30) {
+                message.add("Username must be between 6 and 30 characters");
+            }
+            if (password.length() < 6 || password.length() > 18) {
+                message.add("Password must be between 6 and 18 characters");
+            }
+            String regex = "^[a-zA-Z0-9_]+$";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(username);
+            if (!matcher.matches()) {
+               message.add("Username must not contain special characters");
+            }
+
+            String regex2 = ".*\\s+.*";
+            Pattern pattern2 = Pattern.compile(regex2);
+            Matcher matcherPass = pattern2.matcher(password);
+            Matcher matcherUsername = pattern2.matcher(username);
+            if (matcherUsername.matches() || matcherPass.matches()) {
+                message.add("Username/Password must not contain space characters");
+            }
+            if(!password.equals(confirmPass)) {
+                message.add("Confirm password is not match");
+            }
+            if(Integer.parseInt(age) < 18 || Integer.parseInt(age) > 100) {
+                message.add("Age must be between 18 and 100");
+            }
+            String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+            Pattern emailPattern = Pattern.compile(emailRegex);
+            Matcher emailMatcher = emailPattern.matcher(email);
+            if(!emailMatcher.matches()) {
+                message.add("Email is not valid");
+            }
+
+            if(phone.length() < 10 || phone.length() > 11) {
+                message.add("Phone number must be between 10 and 11 characters");
+            }
+            if(!role.equals("student") && !khoa.equals("null")) {
+                message.add("Only student can choose khoa");
+            }
+            if(message.size() > 0) {
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("home.jsp").forward(request, response);
+                return;
+            }
             Users users = new Users();
             UsersDAO usersDAO = new UsersDAO();
             users.setFirstName(firstName);
