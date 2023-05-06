@@ -55,7 +55,7 @@ public class TestLoginController {
         loginController.doPost(request, response);
         Mockito.verify(session).setAttribute("username", username);
         Mockito.verify(session).setAttribute("userId", "1");
-        Mockito.verify(session).setAttribute("isAdmin", "admin");
+        Mockito.verify(session).setAttribute("role", "admin");
         Mockito.verify(response).sendRedirect("home.jsp"); 
     }
     
