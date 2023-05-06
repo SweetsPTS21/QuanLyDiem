@@ -123,7 +123,7 @@
                         <div class="form-group">
                             <label>Tài khoản</label>
                             <input type="text" class="form-control" id="username" name="username"
-                                   value="<%=userEdited.getUsername()%>" minlength="6" maxlength="30"
+                                   value="<%=userEdited.getUsername()%>"
                                    required>
                             <span id="username-error" style="color: red; font-size: 15px;"></span><br>                        </div>
                         <div class="form-group">
