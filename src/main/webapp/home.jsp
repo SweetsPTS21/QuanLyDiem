@@ -118,10 +118,10 @@
                                         <i class="material-icons">&#xE147;</i>
                                         <span>Add User</span>
                                     </a>
-                                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">
-                                        <i class="material-icons">&#xE15C;</i>
-                                        <span>Delete</span>
-                                    </a>
+<%--                                    <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal">--%>
+<%--                                        <i class="material-icons">&#xE15C;</i>--%>
+<%--                                        <span>Delete</span>--%>
+<%--                                    </a>--%>
                                 </div>
                             </div>
                         </div>
@@ -129,9 +129,9 @@
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th><span class="custom-checkbox"/>
-							 <input type="checkbox" id="selectAll">
-							 <label for="selectAll"></label></th>
+<%--                                <th><span class="custom-checkbox"/>--%>
+<%--							 <input type="checkbox" id="selectAll">--%>
+<%--							 <label for="selectAll"></label></th>--%>
                                 <th>ID</th>
                                 <th>Họ</th>
                                 <th>Tên</th>
@@ -150,13 +150,13 @@
                             <tbody>
                             <% for (Users user : listUsers) {
                                 userCount++;
-                                String idBox = "checkbox" + userCount;
+                                //String idBox = "checkbox" + userCount;
                                 String khoa = khoaDAO.getKhoaByUserId(Integer.parseInt(user.getId())).getTen();
                             %>
                             <tr>
-                                <th><span class="custom-checkbox"/>
-                                    <input type="checkbox" id="<%=idBox%>" name="option[]" value="1">
-                                    <label for="<%=idBox%>"></label></th>
+<%--                                <th><span class="custom-checkbox"/>--%>
+<%--                                    <input type="checkbox" id="<%=idBox%>" name="option[]" value="1">--%>
+<%--                                    <label for="<%=idBox%>"></label></th>--%>
                                 <td><%=user.getId()%></td>
                                 <td><%=user.getFirstName()%></td>
                                 <td><%=user.getLastName()%></td>
@@ -191,18 +191,18 @@
 
                         </table>
 
-                        <div class="clearfix">
-                            <div class="hint-text">showing <b>5</b> out of <b>25</b></div>
-                            <ul class="pagination">
-                                <li class="page-item disabled"><a href="#">Previous</a></li>
-                                <li class="page-item "><a href="#"class="page-link">1</a></li>
-                                <li class="page-item "><a href="#"class="page-link">2</a></li>
-                                <li class="page-item active"><a href="#"class="page-link">3</a></li>
-                                <li class="page-item "><a href="#"class="page-link">4</a></li>
-                                <li class="page-item "><a href="#"class="page-link">5</a></li>
-                                <li class="page-item "><a href="#" class="page-link">Next</a></li>
-                            </ul>
-                        </div>
+<%--                        <div class="clearfix">--%>
+<%--                            <div class="hint-text">showing <b>5</b> out of <b>25</b></div>--%>
+<%--                            <ul class="pagination">--%>
+<%--                                <li class="page-item disabled"><a href="#">Previous</a></li>--%>
+<%--                                <li class="page-item "><a href="#"class="page-link">1</a></li>--%>
+<%--                                <li class="page-item "><a href="#"class="page-link">2</a></li>--%>
+<%--                                <li class="page-item active"><a href="#"class="page-link">3</a></li>--%>
+<%--                                <li class="page-item "><a href="#"class="page-link">4</a></li>--%>
+<%--                                <li class="page-item "><a href="#"class="page-link">5</a></li>--%>
+<%--                                <li class="page-item "><a href="#" class="page-link">Next</a></li>--%>
+<%--                            </ul>--%>
+<%--                        </div>--%>
                     </div>
                 </div>
 

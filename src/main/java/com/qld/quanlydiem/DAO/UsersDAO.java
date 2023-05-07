@@ -211,23 +211,19 @@ public class UsersDAO {
         return false;
     }
 
-    public Boolean Delete(String id) {
+    public void Delete(String id) {
         Connection con = DBUtility.openConnection();
         try {
             PreparedStatement pstmt1 = con.prepareStatement("Delete from `users_khoa` where `user_id`=?");
             PreparedStatement pstmt2 = con.prepareStatement("Delete from `users` where `id`=?");
             pstmt1.setString(1, id);
             pstmt2.setString(1, id);
-            int i = pstmt1.executeUpdate();
-            int j = pstmt2.executeUpdate();
+            pstmt1.executeUpdate();
+            pstmt2.executeUpdate();
 
-            if (i > 0 && j > 0) {
-                return true;
-            }
         } catch (SQLException ex) {
             Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
     }
 
     public Boolean DoiMatKhau(String id, String pass) {
@@ -307,6 +303,24 @@ public class UsersDAO {
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(id));
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+
+    public boolean checkExistUser(String username, String phone, String email) {
+        Connection con = DBUtility.openConnection();
+        String sql = "SELECT * FROM `users` WHERE `username` = ? OR `phone_number` = ? OR `email` = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, phone);
+            ps.setString(3, email);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 return true;

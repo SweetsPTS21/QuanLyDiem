@@ -79,13 +79,19 @@ public class AddUserController extends HttpServlet {
             if(!role.equals("student") && !khoa.equals("null")) {
                 message.add("Only student can choose khoa");
             }
+
+            Users users = new Users();
+            UsersDAO usersDAO = new UsersDAO();
+
+            if(usersDAO.checkExistUser(username, phone, email)) {
+                message.add("User with username/phone/email info is already exist");
+            }
             if(message.size() > 0) {
                 request.setAttribute("message", message);
                 request.getRequestDispatcher("home.jsp").forward(request, response);
                 return;
             }
-            Users users = new Users();
-            UsersDAO usersDAO = new UsersDAO();
+
             users.setFirstName(firstName);
             users.setLastName(lastName);
             users.setUsername(username);

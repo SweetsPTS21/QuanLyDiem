@@ -92,6 +92,9 @@ public class UpdateUserController extends HttpServlet {
             if(!role.equals("student") && !khoa.equals("null")) {
                 message.add("Only student can choose khoa");
             }
+            if(usersDAO.checkExistUser(username, phone, email)) {
+                message.add("User with username/phone/email info is already exist");
+            }
             if(message.size() > 0) {
                 Users users = usersDAO.getUsersById(id);
                 List<String> listRole = usersDAO.getAllRole();
