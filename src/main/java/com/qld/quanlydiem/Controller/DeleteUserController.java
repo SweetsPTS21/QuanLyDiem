@@ -23,9 +23,8 @@ public class DeleteUserController extends HttpServlet {
         try {
             String id = request.getParameter("userId");
             UsersDAO usersDAO = new UsersDAO();
-            if (usersDAO.Delete(id)) {
-                response.sendRedirect("home.jsp");
-            }
+            usersDAO.Delete(id);
+            response.sendRedirect("home.jsp");
         } catch (NullPointerException e) {
             e.printStackTrace();
             response.sendRedirect("home.jsp");
