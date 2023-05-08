@@ -27,7 +27,10 @@ public class ConfigController extends HttpServlet {
 
 
             request.setAttribute("ids", ids);
-            request.getRequestDispatcher("configSubject.jsp").forward(request, response);
+            RequestDispatcher dispatcher= request.getRequestDispatcher("configSubject.jsp");
+            if(dispatcher!=null){
+                dispatcher.forward(request, response);
+            }
         } catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
         }

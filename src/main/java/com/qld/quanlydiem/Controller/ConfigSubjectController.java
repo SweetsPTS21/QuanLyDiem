@@ -17,7 +17,7 @@ public class ConfigSubjectController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
@@ -50,7 +50,10 @@ public class ConfigSubjectController extends HttpServlet {
             else {
                 request.setAttribute("message", "failure");
             }
-            request.getRequestDispatcher("configSubject.jsp").forward(request, response);
+            RequestDispatcher dispatcher= request.getRequestDispatcher("configSubject.jsp");
+            if(dispatcher!=null){
+                dispatcher.forward(request, response);
+            }
         } catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
         }

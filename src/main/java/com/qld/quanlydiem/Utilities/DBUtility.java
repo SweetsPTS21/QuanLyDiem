@@ -23,7 +23,7 @@ public class DBUtility {
         Connection con = null;
         String url = "jdbc:mysql://localhost:3306/quanlydiem";
         String user = "root";
-        String password = "1801";
+        String password = "280301";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
             con = DriverManager.getConnection(url, user, password);

@@ -1,5 +1,6 @@
 import com.qld.quanlydiem.Controller.ConfigController;
 import com.qld.quanlydiem.Controller.LoginController;
+import com.qld.quanlydiem.DAO.SubjectDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +40,10 @@ class ConfigControllerTest {
 
     @Test
     public void TestMethod1() throws ServletException, IOException {
+        ArrayList<String> ids = SubjectDAO.getInstance().getAllSubjectId();
+        configController.doPost(request, response);
+        Mockito.verify(request).setAttribute("ids", ids);
+        Mockito.verify(request).getRequestDispatcher("configSubject.jsp");
 
     }
 
