@@ -71,10 +71,31 @@ public class SubjectDAO {
         }
         return listSubjectIds;
     }
-    public Boolean UpdateSubject(String idSubjectString, int idDauDiem,String percent){
+    public String UpdateSubject(String idSubjectString, int idDauDiem,String percent){
        
         Connection con = DBUtility.openConnection();
         try {
+           
+            PreparedStatement pstmt2 = con.prepareStatement("SELECT mon_hoc.id FROM `mon_hoc` WHERE `id`=? ");
+            
+            
+           
+           
+            pstmt2.setString(1, idSubjectString);
+          
+            ResultSet resultSet = pstmt2.executeQuery();
+            Boolean findBoolean=false;
+            while(resultSet.next()){
+                System.out.println(resultSet.getString("id"));
+                if(resultSet.getString("id").equals(idSubjectString)){
+                    findBoolean=true;
+                }
+                
+            }
+            if(!findBoolean){
+                return "Không tìm thấy môn học trong hệ thống";
+            }
+            
             PreparedStatement pstmt = con.prepareStatement("UPDATE `monhoc_daudiem` SET `tile_phantram`=? WHERE `id_monhoc`=? AND `id_daudiem`=? ");
             
             
@@ -83,11 +104,11 @@ public class SubjectDAO {
             pstmt.setString(3, String.valueOf(idDauDiem));
             int i = pstmt.executeUpdate();
             if (i > 0) {
-                return true;
+                return "Cập nhật đầu điểm thành công";
             }
         } catch (Exception e) {
-            
+            System.out.println(e);
         }
-        return false;
+        return "Cập nhật đầu điểm thất bại";
     }
 }

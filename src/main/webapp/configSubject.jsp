@@ -65,6 +65,33 @@
 
         <!------top-navbar-start----------->
         <%@ include file="top-navbar.jsp" %>
+        
+        <%if(request.getAttribute("message") != null) {
+            String error = "";
+            List<String> message = (List<String>) request.getAttribute("message"); %>
+            <div id="popup-message" class="hide">
+                <span id="close-btn" onclick="hidePopupMessage()">&times;</span>
+                <ul id="popup-messages-list">
+                    <%for (String i : message) {%>
+                    <li><%=i%></li>
+                    <%}%>
+                </ul>
+            </div>
+        <% }%>
+        <script>
+            window.addEventListener("DOMContentLoaded", function() {
+                const messages = document.getElementById("popup-messages-list").getElementsByTagName("li");
+                if (messages.length > 0) {
+                    const popup = document.getElementById("popup-message");
+                    popup.classList.add("show");
+                }
+            });
+
+            function hidePopupMessage() {
+                const popup = document.getElementById("popup-message");
+                popup.classList.remove("show");
+            }
+        </script>
         <!------top-navbar-end----------->
 
 
