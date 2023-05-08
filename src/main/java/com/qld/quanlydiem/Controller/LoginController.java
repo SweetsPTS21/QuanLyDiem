@@ -50,9 +50,8 @@ public class LoginController extends HttpServlet {
         String regex2 = ".*\\s+.*";
         Pattern pattern2 = Pattern.compile(regex2);
         Matcher matcherPass = pattern2.matcher(pass);
-        Matcher matcherUsername = pattern2.matcher(username);
-        if (matcherUsername.matches() || matcherPass.matches()) {
-            message = "Username/Password must not contain space characters";
+        if (matcherPass.matches()) {
+            message = "Password must not contain space characters";
         }
 
         if (message.equals("")) {

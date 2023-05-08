@@ -150,7 +150,7 @@
                             <label>Số điện thoại</label>
                             <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                                    value="<%=userEdited.getPhoneNumber()%>" minlength="3"
-                                   maxlength="11" required>
+                                   maxlength="20" required>
                             <span id="phone-error" style="color: red; font-size: 15px;"></span><br>
                         </div>
                         <div class="form-group">

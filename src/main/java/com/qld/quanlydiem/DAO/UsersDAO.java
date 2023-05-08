@@ -312,7 +312,6 @@ public class UsersDAO {
         }
         return false;
     }
-
     public boolean checkExistUser(String username, String phone, String email) {
         Connection con = DBUtility.openConnection();
         String sql = "SELECT * FROM `users` WHERE `username` = ? OR `phone_number` = ? OR `email` = ?";
@@ -321,6 +320,54 @@ public class UsersDAO {
             ps.setString(1, username);
             ps.setString(2, phone);
             ps.setString(3, email);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+    public boolean checkExistUserByUsername(String username, String id) {
+        Connection con = DBUtility.openConnection();
+        String sql = "SELECT * FROM `users` WHERE `username` = ? AND `id` != ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+    public boolean checkExistUserByPhone(String phone, String id) {
+        Connection con = DBUtility.openConnection();
+        String sql = "SELECT * FROM `users` WHERE `phone_number` = ? AND `id` != ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, phone);
+            ps.setString(2, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(UsersDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return false;
+    }
+    public boolean checkExistUserByEmail(String email, String id) {
+        Connection con = DBUtility.openConnection();
+        String sql = "SELECT * FROM `users` WHERE `email` = ? AND `id` != ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ps.setString(2, id);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 return true;

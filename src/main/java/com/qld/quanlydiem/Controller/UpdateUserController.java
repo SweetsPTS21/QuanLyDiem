@@ -92,7 +92,7 @@ public class UpdateUserController extends HttpServlet {
             if(!role.equals("student") && !khoa.equals("null")) {
                 message.add("Only student can choose khoa");
             }
-            if(usersDAO.checkExistUser(username, phone, email)) {
+            if(usersDAO.checkExistUserByUsername(username, id) || usersDAO.checkExistUserByPhone(phone, id) || usersDAO.checkExistUserByEmail(email, id)) {
                 message.add("User with username/phone/email info is already exist");
             }
             if(message.size() > 0) {

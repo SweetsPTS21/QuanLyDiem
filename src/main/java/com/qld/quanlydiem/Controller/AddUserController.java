@@ -4,6 +4,7 @@ package com.qld.quanlydiem.Controller;
 
 import com.qld.quanlydiem.DAO.UsersDAO;
 import com.qld.quanlydiem.Model.Users;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 
 @WebServlet(name = "AddNewUserController", value = "/addNewUser")
 public class AddUserController extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             response.setContentType("text/html; charset=UTF-8");
             request.setCharacterEncoding("UTF-8");
@@ -56,12 +57,14 @@ public class AddUserController extends HttpServlet {
             String regex2 = ".*\\s+.*";
             Pattern pattern2 = Pattern.compile(regex2);
             Matcher matcherPass = pattern2.matcher(password);
-            Matcher matcherUsername = pattern2.matcher(username);
-            if (matcherUsername.matches() || matcherPass.matches()) {
-                message.add("Username/Password must not contain space characters");
+            if (matcherPass.matches()) {
+                message.add("Password must not contain space characters");
             }
             if(!password.equals(confirmPass)) {
-                message.add("Confirm password is not match");
+                message.add("Confirm password does not match");
+            }
+            if(!age.matches("[0-9]+")) {
+                message.add("Age must be a number");
             }
             if(Integer.parseInt(age) < 18 || Integer.parseInt(age) > 100) {
                 message.add("Age must be between 18 and 100");
@@ -88,7 +91,10 @@ public class AddUserController extends HttpServlet {
             }
             if(message.size() > 0) {
                 request.setAttribute("message", message);
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+                if(dispatcher!=null){
+                    dispatcher.forward(request, response);
+                }
                 return;
             }
 

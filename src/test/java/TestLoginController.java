@@ -22,7 +22,7 @@ import org.mockito.Mockito;
  *
  * @author sondt
  */
-@DisplayName("Test Loggin Controller")
+@DisplayName("Test Login Controller")
 public class TestLoginController {
     @Mock
     HttpServletRequest request;
@@ -47,15 +47,15 @@ public class TestLoginController {
     @Test
     @DisplayName("Should set attribute and redirect to home.jsp when username and password are correct")
     public void TestMethod1() throws ServletException, IOException{
-        String username = "admin123";
-        String password = "admin123";
+        String username = "manager01";
+        String password = "manager01";
         Mockito.when(request.getParameter("username")).thenReturn(username);
         Mockito.when(request.getParameter("password")).thenReturn(password);
         Mockito.when(request.getSession()).thenReturn(session);
         loginController.doPost(request, response);
         Mockito.verify(session).setAttribute("username", username);
-        Mockito.verify(session).setAttribute("userId", "1");
-        Mockito.verify(session).setAttribute("isAdmin", "admin");
+        Mockito.verify(session).setAttribute("userId", "15");
+        Mockito.verify(session).setAttribute("role", "manager");
         Mockito.verify(response).sendRedirect("home.jsp"); 
     }
     
@@ -72,7 +72,7 @@ public class TestLoginController {
     }
     
     @Test
-    @DisplayName("Should return message Username/Password must not contain space characters when username/password has space characters")
+    @DisplayName("Should return message Username must not contain special characters when username has special characters")
     public void TestMethod3() throws ServletException, IOException{
         String username = "admin123 4";
         String password = "admin123";
@@ -80,31 +80,19 @@ public class TestLoginController {
         Mockito.when(request.getParameter("password")).thenReturn(password);
         Mockito.when(request.getSession()).thenReturn(session);
         loginController.doPost(request, response);
-        Mockito.verify(request).setAttribute("message","Username/Password must not contain space characters"); 
+        Mockito.verify(request).setAttribute("message","Username must not contain special characters");
     }
-    
+
     @Test
-    @DisplayName("Should return message username is required when do not enter username")
+    @DisplayName("Should return message Password must not contain space characters when password has space characters")
     public void TestMethod4() throws ServletException, IOException{
-        String username = "";
-        String password = "admin123";
+        String username = "admin1234";
+        String password = "admin 123";
         Mockito.when(request.getParameter("username")).thenReturn(username);
         Mockito.when(request.getParameter("password")).thenReturn(password);
         Mockito.when(request.getSession()).thenReturn(session);
         loginController.doPost(request, response);
-        Mockito.verify(request).setAttribute("message","Username is require"); 
-    }
-    
-    @Test
-    @DisplayName("Should return message password is required when do not enter password")
-    public void TestMethod5() throws ServletException, IOException{
-        String username = "admin123";
-        String password = "";
-        Mockito.when(request.getParameter("username")).thenReturn(username);
-        Mockito.when(request.getParameter("password")).thenReturn(password);
-        Mockito.when(request.getSession()).thenReturn(session);
-        loginController.doPost(request, response);
-        Mockito.verify(request).setAttribute("message","Password is require"); 
+        Mockito.verify(request).setAttribute("message","Password must not contain space characters");
     }
     
     @Test
